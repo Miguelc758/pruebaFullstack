@@ -10,15 +10,16 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import api from '../../servicio/api';
 
+
 const VehiculoList = () => {
-  const [vehiculo, setVehiculo] = useState([]);
+  const [vehiculos, setVehiculos] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchVehiculos = async () => {
     setLoading(true);
     try {
       const response = await api.get('/vehiculos');
-      setVehicles(response.data);
+      setVehiculos(response.data);
     } catch (error) {
       console.error('Error vehiculos:', error);
     } finally {
@@ -27,8 +28,8 @@ const VehiculoList = () => {
   };
 
   useEffect(() => {
-    fetchVehicles();
-  }, []);
+  fetchVehiculos(); 
+}, []);
 
   const columns = [
     { field: 'placa', headerName: 'Placa', flex: 1 },
@@ -86,7 +87,7 @@ const VehiculoList = () => {
       </Box>
       <div style={{ height: 600, width: '100%' }}>
         <DataGrid
-          rows={vehicles}
+        rows={vehiculos}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10, 25, 50]}
@@ -98,4 +99,4 @@ const VehiculoList = () => {
   );
 };
 
-export default VehicleList;
+export default VehiculoList;

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Button, Stepper, Step, StepLabel } from '@mui/material';
 import RevisionForm from '../component/revision/revisionForm';
-import Layout from '../component/common/loading';
+import Layout from '../component/common/layout';
 
 const steps = ['Datos Básicos', 'Items de Revisión', 'Confirmación'];
 
-const Revisions = () => {
+const Revisiones = () => {
   const { vehiculoId } = useParams();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -51,4 +51,4 @@ const Revisions = () => {
   );
 };
 
-export default Revisions;
+export default Revisiones;

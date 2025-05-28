@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
-import theme from './assets/styles/theme';
+import theme from './assets/theme';
 import Dashboard from './pages/dashboard';
-import Vehicles from './pages/vehiculos';
-import Revisions from './pages/revisiones';
-import VehicleLocation from './component/vehiculos/vehiculoLocal';
-import Layout from './component/common/loading';
-import './assets/styles/global.css';
+import Layout from './component/common/layout';
+import './assets/global.css';
+import Vehiculos from './pages/vehiculos';
+import Revisiones from './pages/revisiones';
+import VehiculoLocal from './component/vehiculos/vehiculoLocal';
 
 function App() {
   return (
@@ -15,12 +15,13 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Layout>
-          <Routes>
-            <Route path="/" element={<dashboard />} />
-            <Route path="/vehiculos" element={<vehiculos />} />
-            <Route path="/vehiculos/:mId/location" element={<vehiculoLocal />} />
-            <Route path="/revisiones/:vehiculoId" element={<revisiones />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/vehiculos" element={<Vehiculos />} />
+              <Route path="/vehiculos/:mId/location" element={<VehiculoLocal />} />
+              <Route path="/revisiones/:vehiculoId" element={<Revisiones />} />
+              </Routes>
+
         </Layout>
       </BrowserRouter>
     </ThemeProvider>

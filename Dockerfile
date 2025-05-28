@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm install 
 
 EXPOSE 4001
 
-CMD ["npm","start", "run", "dev","--host","0.0.0.0","--port","4001","--reload"]
+CMD ["npm","start", "--host","0.0.0.0","--port","4001","--reload"]
