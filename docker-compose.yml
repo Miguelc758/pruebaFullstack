@@ -9,61 +9,53 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5000:5000"
+      - "3306:3306"
     networks:
-      - prueba-network
+      - app-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 10
-    
 
   backend:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: prueba-backend
+    container_name: backend
     depends_on:
       mysql:
         condition: service_healthy
     environment:
       - DB_HOST=mysql
       - DB_NAME=${DB_NAME}
-      - DB_USER=root
+      - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
-      - SOAP_ENDPOINT=${SOAP_ENDPOINT}
-      - SOAP_USER=${SOAP_USER}
-      - SOAP_PASSWORD=${SOAP_PASSWORD}
-      - SOAP_FLEET_ID=${SOAP_FLEET_ID}
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./server:/app
-      - /app/node_modules
-    networks:
-      - prueba-network
-    restart: unless-stopped
-
-  frontend:
-    build: ./client
-    dockerfile: Dockerfile
-    container_name: prueba-frontend
-    environment:
-      - REACT_APP_API_URL=http://localhost:4001
     ports:
       - "4001:4001"
-    volumes:
-      - ./client:/app
-      - /app/node_modules
     networks:
-      - prueba-network
-    restart: unless-stopped
+      - app-network
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
   mysql_data:
 
 networks:
-  prueba-network:
+  app-network:
     driver: bridge

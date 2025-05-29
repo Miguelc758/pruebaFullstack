@@ -1,11 +1,13 @@
-FROM node:20-alpine
-
+FROM node:20-alpine as build
 WORKDIR /app
-
+COPY package*.json ./
+RUN npm ci
 COPY . .
+RUN npm run build
 
-RUN npm install 
-
+# Etapa de producción
+FROM nginx:alpine
+ADD ./client/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /var/www/app/
 EXPOSE 4001
-
-CMD ["npm","start", "--host","0.0.0.0","--port","4001","--reload"]
+CMD ["nginx", "-g", "daemon off;"]

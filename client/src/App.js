@@ -9,22 +9,33 @@ import Vehiculos from './pages/vehiculos';
 import Revisiones from './pages/revisiones';
 import VehiculoLocal from './component/vehiculos/vehiculoLocal';
 
+
+
+
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#1890ff',
+          borderRadius: 4,
+          colorBgContainer: '#ffffff',
+        },
+      }}
+    >
       <BrowserRouter>
-        <Layout>
-            <Routes>
+        <MainLayout>
+          <React.Suspense fallback={<Spin size="large" />}>
+              <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/vehiculos" element={<Vehiculos />} />
               <Route path="/vehiculos/:mId/location" element={<VehiculoLocal />} />
               <Route path="/revisiones/:vehiculoId" element={<Revisiones />} />
               </Routes>
-
-        </Layout>
+          </React.Suspense>
+        </MainLayout>
       </BrowserRouter>
-    </ThemeProvider>
+    </ConfigProvider>
   );
 }
 
