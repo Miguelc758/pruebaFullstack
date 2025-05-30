@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-     "dev": "vite",
+    "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,6 +15,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.1.0",
+    "@mui/lab": "^7.0.0-beta.12",
     "@mui/material": "^7.1.0",
     "@mui/x-data-grid": "^8.4.0",
     "antd": "^5.25.3",
@@ -27,7 +28,10 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.14.1",
     "react-leaflet": "^5.0.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.1",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "sequelize": "^6.37.7",
     "xml2js": "^0.6.2",
     "yup": "^1.6.1"

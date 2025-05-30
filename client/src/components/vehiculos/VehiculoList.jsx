@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import api from '../../servicio/api';
+import { Button, IconButton, Box, Typography, Paper } from '@mui/material';
+import { Add, Edit, LocationOn } from '@mui/icons-material';
+import api from '../../services/api';
 
 
 const VehiculoList = () => {
@@ -21,15 +15,15 @@ const VehiculoList = () => {
       const response = await api.get('/vehiculos');
       setVehiculos(response.data);
     } catch (error) {
-      console.error('Error vehiculos:', error);
+      console.error('Error al obtener vehículos:', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-  fetchVehiculos(); 
-}, []);
+    fetchVehiculos();
+  }, []);
 
   const columns = [
     { field: 'placa', headerName: 'Placa', flex: 1 },
@@ -42,17 +36,11 @@ const VehiculoList = () => {
       width: 150,
       renderCell: (params) => (
         <>
-          <IconButton
-            color="primary"
-            onClick={() => handleViewLocation(params.row.mId)}
-          >
-            <LocationOnIcon />
+          <IconButton onClick={() => handleViewLocation(params.row.mId)}>
+            <LocationOn color="primary" />
           </IconButton>
-          <IconButton
-            color="secondary"
-            onClick={() => handleEdit(params.row.id)}
-          >
-            <EditIcon />
+          <IconButton onClick={() => handleEdit(params.row.id)}>
+            <Edit color="secondary" />
           </IconButton>
         </>
       ),
@@ -64,11 +52,11 @@ const VehiculoList = () => {
   };
 
   const handleEdit = (id) => {
-    console.log('Editar vehiculo:', id);
+    console.log('Editar vehículo:', id);
   };
 
   const handleAddNew = () => {
-    console.log('Nuevo vehiculo');
+    console.log('Nuevo vehículo');
   };
 
   return (
@@ -77,17 +65,13 @@ const VehiculoList = () => {
         <Typography variant="h4" component="h1">
           Gestión de Vehículos
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleAddNew}
-        >
+        <Button variant="contained" startIcon={<Add />} onClick={handleAddNew}>
           Agregar Vehículo
         </Button>
       </Box>
       <div style={{ height: 600, width: '100%' }}>
         <DataGrid
-        rows={vehiculos}
+          rows={vehiculos}
           columns={columns}
           pageSize={10}
           rowsPerPageOptions={[10, 25, 50]}

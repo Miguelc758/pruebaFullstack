@@ -2,40 +2,26 @@ import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './assets/theme';
-import Dashboard from './pages/dashboard';
-import Layout from './component/common/layout';
+import Dashboard from './pages/Dashboard';
+import Vehiculos from './pages/Vehiculos';
+import Revisiones from './pages/Revisiones';
+import Layout from './components/common/Layout';
 import './assets/global.css';
-import Vehiculos from './pages/vehiculos';
-import Revisiones from './pages/revisiones';
-import VehiculoLocal from './component/vehiculos/vehiculoLocal';
-
-
-
 
 function App() {
   return (
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#1890ff',
-          borderRadius: 4,
-          colorBgContainer: '#ffffff',
-        },
-      }}
-    >
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
-        <MainLayout>
-          <React.Suspense fallback={<Spin size="large" />}>
-              <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/vehiculos" element={<Vehiculos />} />
-              <Route path="/vehiculos/:mId/location" element={<VehiculoLocal />} />
-              <Route path="/revisiones/:vehiculoId" element={<Revisiones />} />
-              </Routes>
-          </React.Suspense>
-        </MainLayout>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/vehiculos" element={<Vehiculos />} />
+            <Route path="/revisiones/:vehiculoId" element={<Revisiones />} />
+          </Routes>
+        </Layout>
       </BrowserRouter>
-    </ConfigProvider>
+    </ThemeProvider>
   );
 }
 
